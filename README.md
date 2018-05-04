@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
+## For CI
+See https://github.com/angular/angular-cli/wiki/stories-continuous-integration
+```ng test --single-run --no-progress --browser=ChromeNoSandbox```
+```ng e2e --no-progress --config=protractor-ci.conf.js```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
