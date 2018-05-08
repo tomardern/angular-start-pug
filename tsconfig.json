@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowJs": true,
     "baseUrl": "./",
     "paths": {
       "@datorama/utils/*": ["app/utils/*"],
