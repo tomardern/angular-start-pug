@@ -10,8 +10,7 @@
     "e2e": "ng e2e",
     "jest": "jest",
     "jest:clearCache": "jest --clearCache",
-    "jest:workers": "jest --maxWorkers=4",
-    "jest:coverage": "jest --coverage",
+    "jest:coverage": "jest --ci=false --coverage  --maxWorkers=4",
     "jest:watch": "jest --watch",
     "jest:ci": "jest --ci --runInBand --changedSince master"
   },

@@ -2,7 +2,6 @@ module.exports = {
   "bail": true, // Fail on first error
   "preset": "jest-preset-angular",
   "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts",
-  "timers": "fake", // setTimeout will be faked
   "coverageThreshold": {
     "global": {
       "branches": 95,
