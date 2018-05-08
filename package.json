@@ -11,7 +11,7 @@
     "jest": "jest",
     "jest:coverage": "jest --coverage",
     "jest:watch": "jest --watch",
-    "test:ci": "jest --ci --runInBand"
+    "jest:ci": "jest --ci --runInBand --changedSince master"
   },
   "private": true,
   "dependencies": {
