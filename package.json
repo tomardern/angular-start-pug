@@ -9,6 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "jest": "jest",
+    "jest:clearCache": "jest --clearCache",
+    "jest:workers": "jest --maxWorkers=4",
     "jest:coverage": "jest --coverage",
     "jest:watch": "jest --watch",
     "jest:ci": "jest --ci --runInBand --changedSince master"

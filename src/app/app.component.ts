@@ -11,5 +11,8 @@ export class AppComponent {
   letsDoThis() {
     return 'hello-world';
   }
+  andthis() {
+    return 'yep';
+  }
 
 }
