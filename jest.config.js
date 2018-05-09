@@ -1,7 +1,7 @@
 module.exports = {
   "bail": true, // Fail on first error
   "preset": "jest-preset-angular",
-  "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts",
+  "setupTestFrameworkScriptFile": "./setupJest.ts",
   "coverageThreshold": {
     "global": {
       "branches": 95,
@@ -15,7 +15,8 @@ module.exports = {
     "testing/(.*)": "<rootDir>/app/testing/$1"
   },
   "coveragePathIgnorePatterns": [
-    "src/jestGlobalMocks.ts"
+    "jestGlobalMocks.ts",
+    "setupJest.ts"
   ],
   "transformIgnorePatterns": [
     "node_modules/(?!@ngrx|angular2-ui-switch|ng-dynamic)"
