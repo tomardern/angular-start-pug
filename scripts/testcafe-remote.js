@@ -1,17 +1,28 @@
 const createTestCafe = require('testcafe');
-let testcafe         = null;
+const fs = require('fs');
 
-createTestCafe('localhost', 1340, 1341)
+let testcafe = null;
+
+const jsonOutput = `./temp/${new Date().getTime()}.json`;
+const stream = fs.createWriteStream(jsonOutput);
+
+createTestCafe('localhost', 1340)
   .then(tc => {
     testcafe = tc;
     runner = testcafe.createRunner();
 
-    return testcafe.createBrowserConnection();
+    return runner
+      .src('e2e/test-cafe/test1.js')
+      .browsers('chrome:headless')
+      .reporter('json', stream)
+      .reporter('spec')
+      .run();
   })
-  .then(remoteConnection => {
+  .then(failedCount => {
+    stream.end();
 
-    // Outputs remoteConnection.url so that it can be visited from the remote browser.
-    console.log(remoteConnection.url);
-
-  })
-  .catch(error => console.error(error));
+    var data = fs.readFileSync(jsonOutput, 'utf8');
+    console.log(data);
+    testcafe.close();
+})
+.catch(e => console.error(e));
