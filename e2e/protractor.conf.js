@@ -13,6 +13,7 @@ exports.config = {
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
+  //SELENIUM_PROMISE_MANAGER: false, // Disable WebDriver Control Flow
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
