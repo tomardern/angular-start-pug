@@ -2,6 +2,25 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
+## From B&W Repo
+testcafe "chrome:headless" e2e/test-cafe/test1.js
+testcafe "firefox:headless" e2e/test-cafe/test1.js
+testcafe "chrome:emulation:device=iphone 6" tests/sample-fixture.js
+
+"ng": "ng",
+"pug:watch": "f(){ node node_modules/pug-cli/index.js -P -O ./src/translations/$1.json -w ./src/**/*.pug ;};f",
+"pug:build": "f(){ node node_modules/pug-cli/index.js -P -O ./src/translations/$1.json ./src/**/*.pug ;};f",
+"ng1:compile": "f(){ grunt basic-build-for-ng2 --lang_code=$1 ;};f",
+"dev": "f(){ npm run ng1:compile -- $1 && npm run pug:watch -- $1 & ng serve ;};f",
+"build": "f(){ npm run pug:build -- $1 & ng build --prod --no-aot ;};f",
+"dist": "npm run build && http-server-spa dist/",
+"ng-test": "jest src/",
+"test:watch": "jest --watch",
+"test:ci": "jest --runInBand --coverage",
+"lint": "ng lint",
+"e2e": "ng e2e",
+
+
 ## For CI
 See https://github.com/angular/angular-cli/wiki/stories-continuous-integration
 ```ng test --single-run --no-progress --browser=ChromeNoSandbox```
