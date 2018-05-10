@@ -48,20 +48,31 @@ app.post('/', (req, res) => {
   const stream = fs.createWriteStream(jsonOutput);
   const portToUse = Math.floor(Math.random() * 9999) + 1000;
 
+  let runner;
+  let numberOfTests = 0;
+
   createTestCafe('localhost', portToUse)
     .then(tc => {
       testcafe = tc;
+
+      // Prepare the runner
+      runner = testcafe.createRunner()
+        .src(testScript)
+        .reporter('json', stream)
+        .reporter('spec');
+
+      return runner.bootstrapper._getTests();
+    })
+    .then((tests) => {
+      numberOfTests = tests.length;
+      console.log('Currently', tests.length, 'tests');
       console.log('[CONNECT URL]', testcafe.browserConnectionGateway.connectUrl);
-      return waitForBrowsers(testcafe, 1)
+      return waitForBrowsers(testcafe, numberOfTests)
     })
     .then((browsers) => {
       console.log('All connected... running', testScript);
-      return testcafe.createRunner()
-        .src(testScript)
-        .browsers(browsers)
-        //.concurrency(2)
-        .reporter('json', stream)
-        .reporter('spec')
+      return runner.browsers(browsers)
+        //.concurrency(1) // We want each browser to run just one test
         .run();
     })
     .then(() => {
