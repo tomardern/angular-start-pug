@@ -7,6 +7,9 @@ testcafe "chrome:headless" e2e/test-cafe/test1.js
 testcafe "firefox:headless" e2e/test-cafe/test1.js
 testcafe "chrome:emulation:device=iphone 6" tests/sample-fixture.js
 
+# Install a local package
+npm install ./testcafe-browser-provider-remote-lambda --save-dev
+
 "ng": "ng",
 "pug:watch": "f(){ node node_modules/pug-cli/index.js -P -O ./src/translations/$1.json -w ./src/**/*.pug ;};f",
 "pug:build": "f(){ node node_modules/pug-cli/index.js -P -O ./src/translations/$1.json ./src/**/*.pug ;};f",
