@@ -67,12 +67,8 @@ app.post('/', (req, res) => {
       numberOfTests = tests.length;
       console.log('Currently', tests.length, 'tests');
       console.log('[CONNECT URL]', testcafe.browserConnectionGateway.connectUrl);
-      return waitForBrowsers(testcafe, numberOfTests)
-    })
-    .then((browsers) => {
-      console.log('All connected... running', testScript);
-      return runner.browsers(browsers)
-        //.concurrency(1) // We want each browser to run just one test
+      return runner.browsers('lambda-chrome:hello-world.aws.com')
+        .concurrency(numberOfTests) // We want each browser to run just one test
         .run();
     })
     .then(() => {

@@ -59,7 +59,7 @@
     "pug-plugin-ng": "0.0.2",
     "testcafe": "^0.19.2",
     "testcafe-angular-selectors": "^0.3.0",
-    "testcafe-browser-provider-lambda-chrome": "file:lambda-chrome",
+    "testcafe-browser-provider-lambda-chrome": "file:testcafe-lambda-chrome",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~2.7.2"

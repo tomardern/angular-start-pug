@@ -5,6 +5,8 @@ let runner           = null;
 let testcafe = null;
 const stream = fs.createWriteStream(`./${ new Date().getTime()}.json`);
 
+
+
 createTestCafe('localhost', 1337, 1338)
     .then(tc => {
         testcafe = tc;
@@ -21,7 +23,7 @@ createTestCafe('localhost', 1337, 1338)
             console.log("is ready!");
             return runner
                 .src('./e2e/test-cafe/test1.js')
-                .concurrency(3)
+                .concurrency(1)
                 .browsers(remoteConnection)
                 .reporter('json', stream)
                 .reporter('spec')
