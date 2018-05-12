@@ -10,10 +10,16 @@ import { User } from '../classes/user';
 })
 export class UserDetailsComponent implements OnInit {
   @Input() checkoutForm: FormGroup;
-  @Output() whenValid: EventEmitter<User> = new EventEmitter<User>();
+  @Output() whenValid: EventEmitter<any> = new EventEmitter<any>();
 
   userDetails: FormGroup;
 
+  /**
+   * Constructor
+   * @param fb
+   * @param scrollService
+   * @param element
+   */
   constructor(
     private fb: FormBuilder,
     private scrollService: ScrollService,
@@ -22,6 +28,16 @@ export class UserDetailsComponent implements OnInit {
     this.createForm();
   }
 
+  /**
+   * On init
+   */
+  ngOnInit() {
+    this.checkoutForm.addControl('userDetails', this.userDetails);
+  }
+
+  /**
+   * Create the form group and fields
+   */
   createForm() {
     this.userDetails = this.fb.group({
       name: ['', Validators.required],
@@ -29,12 +45,21 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * Once a field is blurred, check it's valid, then output the created user
+   */
   onFieldBlur() {
     if (this.userDetails.valid) {
-      this.whenValid.emit(this.createUser());
+      this.whenValid.emit({
+        user: this.createUser()
+      });
     }
   }
 
+  /**
+   * Create a user
+   * TODO: Probably move this somewhere else?
+   */
   createUser() {
     const user = new User();
     user.setName(this.userDetails.get('name').value);
@@ -43,13 +68,15 @@ export class UserDetailsComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-    this.checkoutForm.addControl('userDetails', this.userDetails);
-  }
-
+  /**
+   * On Submit
+   */
   onSubmit() {
     if (this.userDetails.valid) {
-      this.whenValid.emit(this.createUser());
+      this.whenValid.emit({
+        via: 'button',
+        user: this.createUser()
+      });
     } else {
       this.scrollService.scrollTo(this.element.nativeElement);
     }

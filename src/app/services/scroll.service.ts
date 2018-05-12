@@ -5,19 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class ScrollService {
 
-  constructor() { }
 
-  /*
-  var elmnt = document.getElementById("content");
-  elmnt.scrollIntoView();
-  */
-
+  /**
+   * Scroll to an element or a CSS selector
+   * @param selector
+   */
   scrollTo(selector: Element | String) {
     if (selector instanceof Element) {
       selector.scrollIntoView();
-      console.log("Scroll to element");
+      console.log("Scroll to element", selector);
+    } else {
+        /*
+        var elmnt = document.getElementById("content");
+        elmnt.scrollIntoView();
+        */
     }
-
   }
 
 }

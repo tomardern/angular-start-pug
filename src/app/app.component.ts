@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from './classes/user';
+import { ScrollService } from './services/scroll.service';
 
 
 @Component({
@@ -13,11 +14,16 @@ export class AppComponent {
 
   checkoutForm: FormGroup = new FormGroup({});
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private scrollService: ScrollService) {
   }
 
-  whenUserDetailsValid(user: User) {
-    console.log(user);
+  whenUserDetailsValid(obj) {
+    console.log(obj.user);
+
+    if (obj.via === 'button') {
+      this.scrollService.scrollTo('app-delivery-details');
+    }
+
   }
 
 
