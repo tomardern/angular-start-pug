@@ -17,8 +17,12 @@ export class AppComponent {
   constructor(private fb: FormBuilder, private scrollService: ScrollService) {
   }
 
-  whenUserDetailsValid(obj) {
-    console.log(obj.user);
+  /**
+   * When the user details change
+   * @param obj
+   */
+  whenUserDetailsChange(obj) {
+    console.log('whenUserDetailsChange',obj);
 
     if (obj.via === 'button') {
       this.scrollService.scrollTo('app-delivery-details');

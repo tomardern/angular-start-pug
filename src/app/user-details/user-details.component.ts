@@ -10,7 +10,7 @@ import { User } from '../classes/user';
 })
 export class UserDetailsComponent implements OnInit {
   @Input() checkoutForm: FormGroup;
-  @Output() whenValid: EventEmitter<any> = new EventEmitter<any>();
+  @Output() whenChanged: EventEmitter<any> = new EventEmitter<any>();
 
   userDetails: FormGroup;
 
@@ -49,11 +49,9 @@ export class UserDetailsComponent implements OnInit {
    * Once a field is blurred, check it's valid, then output the created user
    */
   onFieldBlur() {
-    if (this.userDetails.valid) {
-      this.whenValid.emit({
-        user: this.createUser()
-      });
-    }
+    this.whenChanged.emit({
+      user: this.userDetails.valid ? this.createUser() : null
+    });
   }
 
   /**
@@ -72,12 +70,12 @@ export class UserDetailsComponent implements OnInit {
    * On Submit
    */
   onSubmit() {
-    if (this.userDetails.valid) {
-      this.whenValid.emit({
-        via: 'button',
-        user: this.createUser()
-      });
-    } else {
+    this.whenChanged.emit({
+      via: 'button',
+      user: this.userDetails.valid ? this.createUser() : null
+    });
+
+    if (this.userDetails.invalid) {
       this.scrollService.scrollTo(this.element.nativeElement);
     }
   }

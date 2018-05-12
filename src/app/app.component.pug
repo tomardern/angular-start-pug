@@ -9,6 +9,6 @@
 
       form([formGroup]="checkoutForm")
         app-user-details(
-          (whenValid)="whenUserDetailsValid($event)"
+          (whenChanged)="whenUserDetailsChange($event)"
           [checkoutForm]="checkoutForm"
           )
