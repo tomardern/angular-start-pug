@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from './classes/user';
 
 
 @Component({
@@ -10,17 +11,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AppComponent {
   title = 'app';
 
-  userDetailsForm: FormGroup;
+  checkoutForm: FormGroup = new FormGroup({});
 
   constructor(private fb: FormBuilder) {
-    this.createForm();
   }
 
-  createForm() {
-    this.userDetailsForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required, Validators.email]
-    });
+  whenUserDetailsValid(user: User) {
+    console.log(user);
   }
+
 
 }

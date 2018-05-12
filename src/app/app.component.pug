@@ -7,26 +7,8 @@
         h3 Angular Checkout
         hr
 
-      form(
-        [formGroup]="userDetailsForm"
-      )
-        h4 Your Details
-
-        // Name
-        .form-group.row
-          .col-sm-4
-            label.mb-0.center-block Name:
-          .col-sm-8
-            input.form-control(
-              formControlName="name"
-            )
-
-        // Email
-        .form-group.row
-          .col-sm-4
-            label.mb-0.center-block Email:
-          .col-sm-8
-            input.form-control(
-              type="email"
-              formControlName="email"
-            )
+      form([formGroup]="checkoutForm")
+        app-user-details(
+          (whenValid)="whenUserDetailsValid($event)"
+          [checkoutForm]="checkoutForm"
+          )
