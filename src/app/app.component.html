@@ -1,8 +1,33 @@
 
-<header>
-  <h1>Yep, all good, I think! Are we sure, yes we are woop</h1>
-  <h1>Hello This is the name!</h1>
-  <h2>Also allows full a(href="") here and here ready woop too and now</h2>
-  <h3>Hello we.dont.have.this.one Yet, but we could do soon</h3>
-  <input type="text">
-</header>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <div class="pt-5 pb-4">
+        <h3>Angular Checkout</h3>
+        <hr>
+      </div>
+      <form [formGroup]="userDetailsForm">
+        <h4>Your Details</h4>
+        <!-- Name-->
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label class="mb-0 center-block">Name:</label>
+          </div>
+          <div class="col-sm-8">
+            <input class="form-control" formControlName="name">
+          </div>
+        </div>
+        <!-- Email-->
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label class="mb-0 center-block">Email:</label>
+          </div>
+          <div class="col-sm-8">
+            <input class="form-control" type="email" formControlName="email">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
