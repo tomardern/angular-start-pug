@@ -3,37 +3,16 @@ const bodyParser = require('body-parser')
 const createTestCafe = require('testcafe');
 const fs = require('fs');
 
+const lambdaChrome = require('testcafe-browser-provider-lambda-chrome');
+console.log(lambdaChrome);
 
 const app = express();
 var concat = require('concat-stream');
 app.use(bodyParser.text({ type: '*/*' }));
 
+process.env.TESTCAFE_LAMBDA_CHROME_URL = 'http://localhost:3009';
 
-/**
- * Wait for 'x' amount to connect
- * @param {testcafe} testcafe
- * @param {SVGAnimatedInteger} remoteCount
- */
-var waitForBrowsers = function (testcafe, remoteCount) {
-  var connectionPromises = [];
-
-  for (var i = 0; i < remoteCount; i++) {
-    const p = testcafe
-      .createBrowserConnection()
-      .then((bc) => {
-        return new Promise((resolve, reject) => {
-          bc.once('ready', () => {
-            console.log('CONNECTED', bc.userAgent);
-            resolve(bc);
-          });
-        });
-      })
-    connectionPromises.push(p);
-  }
-
-  return Promise.all(connectionPromises);
-}
-
+console.log('LAMBDA URL', process.env.TESTCAFE_LAMBDA_CHROME_URL);
 
 /**
  * Router
@@ -67,12 +46,9 @@ app.post('/', (req, res) => {
       numberOfTests = tests.length;
       console.log('Currently', tests.length, 'tests');
       console.log('[CONNECT URL]', testcafe.browserConnectionGateway.connectUrl);
-      return waitForBrowsers(testcafe, numberOfTests)
-    })
-    .then((browsers) => {
-      console.log('All connected... running', testScript);
-      return runner.browsers(browsers)
-        //.concurrency(1) // We want each browser to run just one test
+
+      return runner.browsers('lambda-chrome')
+        .concurrency(numberOfTests) // We want each browser to run just one test
         .run();
     })
     .then(() => {
