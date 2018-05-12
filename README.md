@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
+## To Start:
+`grunt --locale=en`
+
+
 ## For CI
 See https://github.com/angular/angular-cli/wiki/stories-continuous-integration
 ```ng test --single-run --no-progress --browser=ChromeNoSandbox```
