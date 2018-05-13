@@ -7,6 +7,7 @@ import { UserService } from 'services/user.service';
 
 import { Order } from 'classes/order';
 import { Purchase } from 'classes/purchase';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class AppComponent {
 
   private order: Order = new Order();
   private purchase: Purchase;
+  private user$: BehaviorSubject<User>;
 
   constructor(
     private purchaseService: PurchaseService,
@@ -29,6 +31,7 @@ export class AppComponent {
   ) {
 
     this.purchase = this.purchaseService.getPurchase();
+    this.user$ = this.userService.user$;
   }
 
 

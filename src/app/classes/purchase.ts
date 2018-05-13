@@ -2,13 +2,13 @@ import { Order } from 'classes/order';
 import { BehaviorSubject } from 'rxjs'; // Like a subject but can do getValue()
 
 export class Purchase {
-  orders$: BehaviorSubject<Order[]>;
+  orders$: BehaviorSubject<Order[]>  = new BehaviorSubject([]);
 
   private user;
   public id;
 
   constructor() {
-    this.orders$ = new BehaviorSubject([]);
+
   }
 
   setId(id) {

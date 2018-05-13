@@ -33,7 +33,7 @@ export class PurchaseService {
     let p;
 
     if (this.purchase.getOrders().length < 1) {
-      const user: User = this.userService.getCurrentUser();
+      const user: User = this.userService.getUser();
       p = PurchaseModel.create(order, user)
         .then((res) => {
           this.purchase.setId(res.purchaseId);
@@ -64,7 +64,12 @@ export class PurchaseService {
    * Checout the purchase
    */
   checkout() {
-    return PurchaseModel.checkout(this.purchase);
+    return PurchaseModel.checkout(this.purchase)
+      .then(() => {
+        const user = this.userService.getUser();
+        user.setHasOrdered(true);
+        this.userService.setCurrentUser(user);
+      });
   }
 
 

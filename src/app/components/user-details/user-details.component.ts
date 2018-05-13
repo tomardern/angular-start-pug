@@ -75,7 +75,6 @@ export class UserDetailsComponent implements OnInit {
           this.emailValidationService.checkEmail(email)
           .then((res) => {
             this.user.setExternalId(res.externalId);
-            this.user.setPreviouslyOrdered(res.previouslyOrdered);
             this.userService.setCurrentUser(this.userDetails.valid ? this.user : null);
           });
         }

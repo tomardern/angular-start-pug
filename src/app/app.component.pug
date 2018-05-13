@@ -1,7 +1,13 @@
 .container.pt-4
-  .row
-    .col-sm-4(*ngIf="purchase.orders$ | async; let orders;")
-      .card
+  .row(*ngIf="purchase.orders$ | async; let orders;")
+
+    // Aside
+    .col-sm-4
+
+      .card.mb-4(*ngIf="((user$ | async)?.hasOrdered || orders.length) && (user$ | async)?.name")
+        .card-header Hello {{ (user$ | async)?.name }}!
+
+      .card(*ngIf="orders.length")
         .card-header Basket
           | &nbsp; (
           span {{ orders.length }}
@@ -11,17 +17,17 @@
           .list-group-item(*ngFor="let order of orders; index as i")
             | {{i}} - {{order.name}} {{order.id}}
 
-      .pt-4(*ngIf="orders.length")
-        input.btn.btn-success.btn-block(
-          (click)="checkout()"
-          type="button"
-          value="Purchase"
-        )
-        input.btn.btn-warning.btn-block(
-          (click)="updateLastOrder()"
-          type="button"
-          value="Update the last order"
-        )
+        .pt-4(*ngIf="orders.length")
+          input.btn.btn-success.btn-block(
+            (click)="checkout()"
+            type="button"
+            value="Purchase"
+          )
+          input.btn.btn-warning.btn-block(
+            (click)="updateLastOrder()"
+            type="button"
+            value="Update the last order"
+          )
 
     .col-sm-8
         h3 Angular Checkout
@@ -29,6 +35,7 @@
 
         form([formGroup]="checkoutForm"   (ngSubmit)="submitCheckout()" )
           app-user-details(
+            *ngIf="!orders.length && !(user$ | async)?.hasOrdered"
             (whenValidSubmit) = "whenUserDetailsValidSubmit($event)"
             [checkoutForm]="checkoutForm"
             )

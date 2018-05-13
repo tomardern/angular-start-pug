@@ -3,7 +3,7 @@ export class User {
   private name: String;
   private email: String;
   private externalId: String;
-  private previouslyOrdered: Boolean;
+  private hasOrdered: boolean;
 
   setName(name: String) {
     this.name = name;
@@ -23,9 +23,14 @@ export class User {
     this.externalId = md5;
   }
 
-  setPreviouslyOrdered(bool: Boolean) {
-    this.previouslyOrdered = bool;
+  setHasOrdered(bool: boolean) {
+    this.hasOrdered = bool;
   }
+  getHasOrdered() {
+    return this.hasOrdered;
+  }
+
+
 
 
 }
