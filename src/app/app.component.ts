@@ -14,6 +14,8 @@ export class AppComponent {
 
   checkoutForm: FormGroup = new FormGroup({});
 
+  private user: User;
+
   constructor(private fb: FormBuilder, private scrollService: ScrollService) {
   }
 
@@ -21,13 +23,13 @@ export class AppComponent {
    * When the user details change
    * @param obj
    */
-  whenUserDetailsChange(obj) {
-    console.log('whenUserDetailsChange',obj);
+  whenUserDetailsChange(user: User) {
+    console.log('whenUserDetailsChange', user);
+  }
 
-    if (obj.via === 'button') {
-      this.scrollService.scrollTo('app-delivery-details');
-    }
-
+  whenUserDetailsValidSubmit() {
+    console.log('User Details is valid');
+    this.scrollService.scrollTo('app-delivery-details');
   }
 
 

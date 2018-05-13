@@ -9,20 +9,14 @@ form(
     .col-sm-4
       label.mb-0.center-block Name:
     .col-sm-8
-      input.form-control(
-        (blur)="onFieldBlur()"
-        formControlName="name"
-        )
+      input.form-control(formControlName="name")
 
   // Email
   .form-group.row
     .col-sm-4
       label.mb-0.center-block Email:
     .col-sm-8
-      input.form-control(
-        (blur)="onFieldBlur()"
-        formControlName="email"
-        )
+      input.form-control(formControlName="email")
 
   // Submit
   .row

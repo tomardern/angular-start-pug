@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ScrollService } from '../services/scroll.service';
 import { User } from '../classes/user';
+import { EmailValidationService } from '../services/email-validation.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-details',
@@ -10,9 +12,11 @@ import { User } from '../classes/user';
 })
 export class UserDetailsComponent implements OnInit {
   @Input() checkoutForm: FormGroup;
-  @Output() whenChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() whenChanged: EventEmitter<User> = new EventEmitter<User>();
+  @Output() whenValidSubmit: EventEmitter<User> = new EventEmitter<User>();
 
-  userDetails: FormGroup;
+  userDetails: FormGroup = new FormGroup({});
+  user: User = new User();
 
   /**
    * Constructor
@@ -23,6 +27,7 @@ export class UserDetailsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private scrollService: ScrollService,
+    private emailValidationService: EmailValidationService,
     private element: ElementRef
   ) {
     this.createForm();
@@ -39,43 +44,45 @@ export class UserDetailsComponent implements OnInit {
    * Create the form group and fields
    */
   createForm() {
-    this.userDetails = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required]
+
+    // Name Control
+    const nameControl = new FormControl('', {
+      validators: [Validators.required],
+      updateOn: 'blur'
     });
-  }
-
-  /**
-   * Once a field is blurred, check it's valid, then output the created user
-   */
-  onFieldBlur() {
-    this.whenChanged.emit({
-      user: this.userDetails.valid ? this.createUser() : null
+    nameControl.valueChanges.subscribe((name) => {
+      this.user.setName(name);
+      this.whenChanged.emit(this.userDetails.valid ? this.user : null);
     });
-  }
 
-  /**
-   * Create a user
-   * TODO: Probably move this somewhere else?
-   */
-  createUser() {
-    const user = new User();
-    user.setName(this.userDetails.get('name').value);
-    user.setEmail(this.userDetails.get('email').value);
-    return user;
-  }
+    this.userDetails.addControl('name', nameControl);
 
+    // Email Control
+    const emailControl = new FormControl('', {
+      validators: [Validators.required, Validators.email],
+      updateOn: 'blur' // No need for 'debounce' if updateOn is blur
+    });
+    emailControl.valueChanges
+      .subscribe(email => {
+        this.user.setEmail(email);
+        return this.emailValidationService.checkEmail(email)
+          .then((res) => {
+            this.user.setExternalId(res.externalId);
+            this.user.setPreviouslyOrdered(res.previouslyOrdered);
+            this.whenChanged.emit(this.userDetails.valid ? this.user : null);
+          });
+      });
+
+    this.userDetails.addControl('email', emailControl);
+  }
 
   /**
    * On Submit
    */
   onSubmit() {
-    this.whenChanged.emit({
-      via: 'button',
-      user: this.userDetails.valid ? this.createUser() : null
-    });
-
-    if (this.userDetails.invalid) {
+    if (this.userDetails.valid) {
+      this.whenValidSubmit.emit(this.user);
+    } else {
       this.scrollService.scrollTo(this.element.nativeElement);
     }
   }

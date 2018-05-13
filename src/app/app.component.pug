@@ -10,5 +10,6 @@
       form([formGroup]="checkoutForm")
         app-user-details(
           (whenChanged)="whenUserDetailsChange($event)"
+          (whenValidSubmit) = "whenUserDetailsValidSubmit($event)"
           [checkoutForm]="checkoutForm"
           )
