@@ -1,25 +1,27 @@
 
-<div class="container">
+<div class="container pt-4">
   <div class="row">
-    <div class="col-sm-8 offset xs-2">
-      <div class="pt-5 pb-4">
-        <h3>Angular Checkout</h3>
-        <hr>
+    <div class="col-sm-4" *ngIf="purchase.orders$ | async; let orders;">
+      <div class="card">
+        <div class="card-header">
+          Basket&nbsp; (<span>{{ orders.length }}</span>&nbsp; Items )</div>
+        <ul class="list-group" *ngIf="orders.length">
+          <div class="list-group-item" *ngFor="let order of orders; index as i">{{i}} - {{order.name}} {{order.id}}</div>
+        </ul>
       </div>
+      <div class="pt-4" *ngIf="orders.length">
+        <input class="btn btn-success btn-block" (click)="checkout()" type="button" value="Purchase">
+        <input class="btn btn-warning btn-block" (click)="updateLastOrder()" type="button" value="Update the last order">
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <h3>Angular Checkout</h3>
+      <hr>
       <form [formGroup]="checkoutForm" (ngSubmit)="submitCheckout()">
         <app-user-details (whenValidSubmit)="whenUserDetailsValidSubmit($event)" [checkoutForm]="checkoutForm"></app-user-details>
         <div class="row">
           <div class="col-sm-8 offset-sm-2 pt-4">
             <input class="btn btn-primary btn-block" type="submit" value="Add to Basket">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-8 offset-sm-2 pt-4">
-            <ul>
-              <li *ngFor="let order of purchase.orders$ | async; index as i">{{i}} - {{order.name}} {{order.id}}</li>
-            </ul>
-            <input class="btn btn-primary btn-block" (click)="checkout()" type="button" value="Purchase">
-            <input class="btn btn-primary btn-block" (click)="updateLastOrder()" type="button" value="Update the last order">
           </div>
         </div>
       </form>

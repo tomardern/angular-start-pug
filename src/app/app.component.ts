@@ -28,16 +28,7 @@ export class AppComponent {
     private scrollService: ScrollService
   ) {
 
-    this.userService.userChanges$.subscribe((user) => {
-      console.log('User is', user);
-    });
-
     this.purchase = this.purchaseService.getPurchase();
-
-    this.purchase.orders$.subscribe((order) => {
-      console.log('New order on purchase', order);
-    });
-
   }
 
 
@@ -59,16 +50,16 @@ export class AppComponent {
    * Submit the checkout
    */
   submitCheckout() {
-    if (this.checkoutForm.valid) {
+    // if (this.checkoutForm.valid) {
       this.order.name = 'An Order!';
       this.purchaseService.addOrder(this.order)
         .then(() => {
           this.order = new Order(); // Reset the order
         });
 
-    } else {
-      alert('Not valid');
-    }
+    // } else {
+      // alert('Not valid');
+    // }
   }
 
   checkout() {
