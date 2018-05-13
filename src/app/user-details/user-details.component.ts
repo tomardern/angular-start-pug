@@ -3,7 +3,6 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ScrollService } from '../services/scroll.service';
 import { User } from '../classes/user';
 import { EmailValidationService } from '../services/email-validation.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-details',
@@ -32,7 +31,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   /**
-   * On init
+   * On init, add the control to the parent form
    */
   ngOnInit() {
     this.checkoutForm.addControl('userDetails', this.userDetails);
@@ -48,7 +47,7 @@ export class UserDetailsComponent implements OnInit {
       validators: [Validators.required],
       updateOn: 'blur'
     });
-    nameControl.valueChanges.subscribe((name) => {
+    nameControl.valueChanges.subscribe((name) => { // Instead of 'blur' event
       this.user.setName(name);
       this.whenChanged.emit(this.userDetails.valid ? this.user : null);
     });
@@ -73,6 +72,7 @@ export class UserDetailsComponent implements OnInit {
 
     this.userDetails.addControl('email', emailControl);
   }
+
 
   /**
    * On Submit
