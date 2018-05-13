@@ -32,7 +32,7 @@ export class UserDetailsComponent implements OnInit {
   ) {
 
     // After the first setCurrentUser, the userService.user is the same reference to this.user
-    this.user = this.userService.getCurrentUser() || new User();
+    this.user = new User();
     this.createForm();
   }
 

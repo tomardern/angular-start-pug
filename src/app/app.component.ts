@@ -6,6 +6,7 @@ import { BasketService } from 'services/basket.service';
 import { UserService } from 'services/user.service';
 
 import { Order } from 'classes/order';
+import { Basket } from 'classes/basket';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AppComponent {
   checkoutForm: FormGroup = new FormGroup({});
 
   private order: Order = new Order();
+  private basket: Basket;
 
   constructor(
     private basketService: BasketService,
@@ -30,6 +32,12 @@ export class AppComponent {
       console.log('User is', user);
     });
 
+    this.basket = this.basketService.getBasket();
+
+    this.basket.ordersChanges$.subscribe((order) => {
+      console.log('New order on basket', order);
+    });
+
   }
 
 
@@ -38,7 +46,16 @@ export class AppComponent {
   }
 
   submitCheckout() {
-    this.basketService.addOrder(this.order);
+    if (this.checkoutForm.valid) {
+      this.order.name = 'First Order!';
+      this.basketService.addOrder(this.order)
+        .then(() => {
+
+          this.order = new Order(); // Reset the order
+        });
+    } else {
+      alert('Not valid');
+    }
   }
 
 
