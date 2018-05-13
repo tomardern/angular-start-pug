@@ -1,8 +1,11 @@
 import { Component} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from './classes/user';
+import { FormGroup } from '@angular/forms';
+import { User } from 'classes/user';
 import { ScrollService } from 'services/scroll.service';
 import { BasketService } from 'services/basket.service';
+import { UserService } from 'services/user.service';
+
+import { Order } from 'classes/order';
 
 
 @Component({
@@ -15,27 +18,27 @@ export class AppComponent {
 
   checkoutForm: FormGroup = new FormGroup({});
 
-  private user: User;
+  private order: Order = new Order();
 
-  constructor(private fb: FormBuilder, private scrollService: ScrollService) {
+  constructor(
+    private basketService: BasketService,
+    private userService: UserService,
+    private scrollService: ScrollService
+  ) {
+
+    this.userService.userChanges$.subscribe((user) => {
+      console.log('User is', user);
+    });
+
   }
 
-  /**
-   * When the user details change
-   * @param obj
-   */
-  whenUserDetailsChange(user: User) {
-    console.log('whenUserDetailsChange', user);
-  }
 
-  whenUserDetailsValidSubmit(user: User) {
-    console.log('User Details is valid for user', user);
+  whenUserDetailsValidSubmit() {
     this.scrollService.scrollTo('app-delivery-details');
   }
 
-
   submitCheckout() {
-    alert('here');
+    this.basketService.addOrder(this.order);
   }
 
 

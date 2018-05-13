@@ -8,9 +8,15 @@ export class User {
   setName(name: String) {
     this.name = name;
   }
+  getName() {
+    return this.name;
+  }
 
   setEmail(email: String) {
     this.email = email;
+  }
+  getEmail() {
+    return this.email;
   }
 
   setExternalId(md5: string) {

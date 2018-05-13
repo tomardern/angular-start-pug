@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ScrollService } from 'services/scroll.service';
+import { UserService } from 'services/user.service';
 import { User } from 'classes/user';
 import { EmailValidationService } from 'services/email-validation.service';
+
 
 @Component({
   selector: 'app-user-details',
@@ -15,7 +17,7 @@ export class UserDetailsComponent implements OnInit {
   @Output() whenValidSubmit: EventEmitter<User> = new EventEmitter<User>();
 
   userDetails: FormGroup = new FormGroup({});
-  user: User = new User();
+  user: User;
 
   /**
    * Constructor
@@ -24,9 +26,13 @@ export class UserDetailsComponent implements OnInit {
    */
   constructor(
     private scrollService: ScrollService,
+    private userService: UserService,
     private emailValidationService: EmailValidationService,
     private element: ElementRef
   ) {
+
+    // After the first setCurrentUser, the userService.user is the same reference to this.user
+    this.user = this.userService.getCurrentUser() || new User();
     this.createForm();
   }
 
@@ -43,31 +49,36 @@ export class UserDetailsComponent implements OnInit {
   createForm() {
 
     // Name Control
-    const nameControl = new FormControl('', {
+    const nameControl = new FormControl(this.user.getName(), {
       validators: [Validators.required],
       updateOn: 'blur'
     });
     nameControl.valueChanges.subscribe((name) => { // Instead of 'blur' event
-      this.user.setName(name);
-      this.whenChanged.emit(this.userDetails.valid ? this.user : null);
+      this.user.setName(nameControl.valid ? name : null);
+      this.userService.setCurrentUser(this.userDetails.valid ? this.user : null);
     });
 
     this.userDetails.addControl('name', nameControl);
 
     // Email Control
-    const emailControl = new FormControl('', {
+    const emailControl = new FormControl(this.user.getEmail(), {
       validators: [Validators.required, Validators.email],
       updateOn: 'blur' // No need for 'debounce' if updateOn is blur
     });
     emailControl.valueChanges
       .subscribe(email => {
-        this.user.setEmail(email);
-        return this.emailValidationService.checkEmail(email)
+        this.user.setEmail(emailControl.valid ? email : null);
+
+        if (emailControl.invalid) {
+          this.userService.setCurrentUser(null);
+        } else {
+          this.emailValidationService.checkEmail(email)
           .then((res) => {
             this.user.setExternalId(res.externalId);
             this.user.setPreviouslyOrdered(res.previouslyOrdered);
-            this.whenChanged.emit(this.userDetails.valid ? this.user : null);
+            this.userService.setCurrentUser(this.userDetails.valid ? this.user : null);
           });
+        }
       });
 
     this.userDetails.addControl('email', emailControl);
