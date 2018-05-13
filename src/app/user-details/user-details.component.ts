@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ScrollService } from '../services/scroll.service';
 import { User } from '../classes/user';
 import { EmailValidationService } from '../services/email-validation.service';
@@ -20,12 +20,10 @@ export class UserDetailsComponent implements OnInit {
 
   /**
    * Constructor
-   * @param fb
    * @param scrollService
    * @param element
    */
   constructor(
-    private fb: FormBuilder,
     private scrollService: ScrollService,
     private emailValidationService: EmailValidationService,
     private element: ElementRef

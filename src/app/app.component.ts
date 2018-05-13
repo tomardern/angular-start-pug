@@ -27,8 +27,8 @@ export class AppComponent {
     console.log('whenUserDetailsChange', user);
   }
 
-  whenUserDetailsValidSubmit() {
-    console.log('User Details is valid');
+  whenUserDetailsValidSubmit(user: User) {
+    console.log('User Details is valid for user', user);
     this.scrollService.scrollTo('app-delivery-details');
   }
 
