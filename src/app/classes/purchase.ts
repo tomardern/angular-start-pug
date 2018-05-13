@@ -1,7 +1,7 @@
 import { Order } from 'classes/order';
 import { Subject } from 'rxjs';
 
-export class Basket {
+export class Purchase {
   orders: Array<Order> = [];
   ordersChanges$ = new Subject<Order>();
 

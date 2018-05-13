@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Basket } from 'classes/basket';
-import { BasketModel } from 'classes/basket-model';
+import { Purchase } from 'classes/purchase';
+import { PurchaseModel } from 'classes/purchase-model';
 import { UserService } from 'services/user.service';
 import { Order } from 'classes/order';
 import { User } from 'classes/user';
@@ -8,17 +8,17 @@ import { User } from 'classes/user';
 @Injectable({
   providedIn: 'root'
 })
-export class BasketService {
+export class PurchaseService {
 
-  private basket: Basket = new Basket();
+  private purchase: Purchase = new Purchase();
 
   constructor(
     private userService: UserService
   ) {
   }
 
-  getBasket() {
-    return this.basket;
+  getPurchase() {
+    return this.purchase;
   }
 
   /**
@@ -28,15 +28,15 @@ export class BasketService {
   addOrder<Promise>(order: Order) {
     let p;
 
-    if (this.basket.getOrders().length < 1) {
+    if (this.purchase.getOrders().length < 1) {
       const user: User = this.userService.getCurrentUser();
-      p = BasketModel.create(order, user);
+      p = PurchaseModel.create(order, user);
     } else {
-      p = BasketModel.addOrder(this.basket, order);
+      p = PurchaseModel.addOrder(this.purchase, order);
     }
 
     return p.then(() => {
-      this.basket.addOrder(order);
+      this.purchase.addOrder(order);
     });
   }
 

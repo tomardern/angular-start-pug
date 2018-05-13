@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ScrollService } from 'services/scroll.service';
-import { BasketService } from 'services/basket.service';
+import { PurchaseService } from 'services/purchase.service';
 
 import { AppComponent } from './app.component';
 import { UserDetailsComponent } from 'components/user-details/user-details.component';
@@ -19,7 +19,7 @@ import { UserDetailsComponent } from 'components/user-details/user-details.compo
     ReactiveFormsModule
   ],
   providers: [
-    BasketService,
+    PurchaseService,
     ScrollService
   ],
   bootstrap: [AppComponent]

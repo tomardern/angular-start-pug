@@ -2,11 +2,11 @@ import { Component} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { User } from 'classes/user';
 import { ScrollService } from 'services/scroll.service';
-import { BasketService } from 'services/basket.service';
+import { PurchaseService } from 'services/purchase.service';
 import { UserService } from 'services/user.service';
 
 import { Order } from 'classes/order';
-import { Basket } from 'classes/basket';
+import { Purchase } from 'classes/purchase';
 
 
 @Component({
@@ -20,10 +20,10 @@ export class AppComponent {
   checkoutForm: FormGroup = new FormGroup({});
 
   private order: Order = new Order();
-  private basket: Basket;
+  private purchase: Purchase;
 
   constructor(
-    private basketService: BasketService,
+    private purchaseService: PurchaseService,
     private userService: UserService,
     private scrollService: ScrollService
   ) {
@@ -32,10 +32,10 @@ export class AppComponent {
       console.log('User is', user);
     });
 
-    this.basket = this.basketService.getBasket();
+    this.purchase = this.purchaseService.getPurchase();
 
-    this.basket.ordersChanges$.subscribe((order) => {
-      console.log('New order on basket', order);
+    this.purchase.ordersChanges$.subscribe((order) => {
+      console.log('New order on purchase', order);
     });
 
   }
@@ -48,7 +48,7 @@ export class AppComponent {
   submitCheckout() {
     if (this.checkoutForm.valid) {
       this.order.name = 'First Order!';
-      this.basketService.addOrder(this.order)
+      this.purchaseService.addOrder(this.order)
         .then(() => {
 
           this.order = new Order(); // Reset the order

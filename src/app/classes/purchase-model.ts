@@ -1,11 +1,11 @@
 import { Order } from 'classes/order';
 import { User } from 'classes/user';
-import { Basket } from 'classes/basket';
+import { Purchase } from 'classes/purchase';
 
-export class BasketModel {
+export class PurchaseModel {
 
   /**
-   * Create the basket
+   * Create the purchase
    * @param order
    * @param user
    */
@@ -15,11 +15,11 @@ export class BasketModel {
   }
 
   /**
-   * Add another order to the basket
-   * @param basket
+   * Add another order to the purchase
+   * @param purchase
    * @param order
    */
-  static addOrder<Promise>(basket: Basket, order: Order) {
+  static addOrder<Promise>(purchase: Purchase, order: Order) {
     console.log('Backend request to add another order to purchase');
     return Promise.resolve();
   }
