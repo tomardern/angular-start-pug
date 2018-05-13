@@ -4,8 +4,9 @@
     "allowJs": true,
     "baseUrl": "./",
     "paths": {
-      "@datorama/utils/*": ["app/utils/*"],
-      "@datorama/pipes/*": ["app/pipes/*"]
+      "classes/*": ["src/app/classes/*"],
+      "services/*": ["src/app/services/*"],
+      "components/*": ["src/app/components/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

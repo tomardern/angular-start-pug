@@ -1,7 +1,8 @@
 import { Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from './classes/user';
-import { ScrollService } from './services/scroll.service';
+import { ScrollService } from 'services/scroll.service';
+import { BasketService } from 'services/basket.service';
 
 
 @Component({
@@ -30,6 +31,11 @@ export class AppComponent {
   whenUserDetailsValidSubmit(user: User) {
     console.log('User Details is valid for user', user);
     this.scrollService.scrollTo('app-delivery-details');
+  }
+
+
+  submitCheckout() {
+    alert('here');
   }
 
 

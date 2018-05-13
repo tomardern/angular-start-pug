@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { ScrollService } from '../services/scroll.service';
-import { User } from '../classes/user';
-import { EmailValidationService } from '../services/email-validation.service';
+import { ScrollService } from 'services/scroll.service';
+import { User } from 'classes/user';
+import { EmailValidationService } from 'services/email-validation.service';
 
 @Component({
   selector: 'app-user-details',
