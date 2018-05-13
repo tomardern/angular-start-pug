@@ -18,3 +18,21 @@
               type="submit"
               value="Add to Basket"
             )
+
+        .row
+          .col-sm-8.offset-sm-2.pt-4
+            ul
+              li(*ngFor="let order of purchase.orders$ | async; index as i")
+                | {{i}} - {{order.name}} {{order.id}}
+
+            input.btn.btn-primary.btn-block(
+              (click)="checkout()"
+              type="button"
+              value="Purchase"
+            )
+            input.btn.btn-primary.btn-block(
+              (click)="updateLastOrder()"
+              type="button"
+              value="Update the last order"
+            )
+

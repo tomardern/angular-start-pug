@@ -21,6 +21,10 @@ export class PurchaseService {
     return this.purchase;
   }
 
+  reset() {
+    this.purchase = new Purchase();
+  }
+
   /**
    * Add to the order
    * @param order
@@ -30,14 +34,37 @@ export class PurchaseService {
 
     if (this.purchase.getOrders().length < 1) {
       const user: User = this.userService.getCurrentUser();
-      p = PurchaseModel.create(order, user);
+      p = PurchaseModel.create(order, user)
+        .then((res) => {
+          this.purchase.setId(res.purchaseId);
+          return res;
+        });
     } else {
       p = PurchaseModel.addOrder(this.purchase, order);
     }
 
-    return p.then(() => {
+    return p.then((res) => {
+      order.setId(res.orderId);
       this.purchase.addOrder(order);
     });
+  }
+
+  /**
+   * Update an order
+   * @param order
+   */
+  updateOrder(order: Order) {
+    return PurchaseModel.updateOrder(this.purchase, order)
+      .then(() => {
+        this.purchase.updateOrder(order);
+      });
+  }
+
+  /**
+   * Checout the purchase
+   */
+  checkout() {
+    return PurchaseModel.checkout(this.purchase);
   }
 
 

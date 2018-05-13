@@ -13,6 +13,15 @@
             <input class="btn btn-primary btn-block" type="submit" value="Add to Basket">
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-8 offset-sm-2 pt-4">
+            <ul>
+              <li *ngFor="let order of purchase.orders$ | async; index as i">{{i}} - {{order.name}} {{order.id}}</li>
+            </ul>
+            <input class="btn btn-primary btn-block" (click)="checkout()" type="button" value="Purchase">
+            <input class="btn btn-primary btn-block" (click)="updateLastOrder()" type="button" value="Update the last order">
+          </div>
+        </div>
       </form>
     </div>
   </div>

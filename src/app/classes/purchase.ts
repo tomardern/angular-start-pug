@@ -1,26 +1,54 @@
 import { Order } from 'classes/order';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs'; // Like a subject but can do getValue()
 
 export class Purchase {
-  orders: Array<Order> = [];
-  ordersChanges$ = new Subject<Order>();
+  orders$: BehaviorSubject<Order[]>;
 
   private user;
+  public id;
+
+  constructor() {
+    this.orders$ = new BehaviorSubject([]);
+  }
+
+  setId(id) {
+    this.id = id;
+  }
 
   /**
    * Add an order
    * @param order
    */
   addOrder(order: Order) {
-    this.orders.push(order);
-    this.ordersChanges$.next(order);
+    const current = this.orders$.getValue();
+    current.push(order);
+    this.orders$.next(current);
   }
+
+  /**
+   * Update an order in the purchase
+   * @param order
+   */
+  updateOrder(order) {
+    const current = this.orders$.getValue();
+    const index = current.findIndex(o => o.id === order.id);
+    current[index] = order;
+    this.orders$.next(current);
+  }
+
 
   /**
    * Get Orders
    */
-  getOrders<Array>() {
-    return this.orders;
+  getOrders() {
+    return this.orders$.getValue();
   }
+
+
+  clone() {
+    return Object.assign(new Purchase(), this);
+  }
+
+
 
 }

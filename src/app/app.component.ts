@@ -34,7 +34,7 @@ export class AppComponent {
 
     this.purchase = this.purchaseService.getPurchase();
 
-    this.purchase.ordersChanges$.subscribe((order) => {
+    this.purchase.orders$.subscribe((order) => {
       console.log('New order on purchase', order);
     });
 
@@ -45,17 +45,39 @@ export class AppComponent {
     this.scrollService.scrollTo('app-delivery-details');
   }
 
+  /**
+   * Update the last order
+   */
+  updateLastOrder() {
+    const currentOrders = this.purchase.getOrders();
+    const toUpdate = currentOrders[currentOrders.length - 1].clone(); // The last one
+    toUpdate.name = 'Tom Updated';
+    this.purchaseService.updateOrder(toUpdate);
+  }
+
+  /**
+   * Submit the checkout
+   */
   submitCheckout() {
     if (this.checkoutForm.valid) {
-      this.order.name = 'First Order!';
+      this.order.name = 'An Order!';
       this.purchaseService.addOrder(this.order)
         .then(() => {
-
           this.order = new Order(); // Reset the order
         });
+
     } else {
       alert('Not valid');
     }
+  }
+
+  checkout() {
+    return this.purchaseService.checkout().then(() => {
+      const purchased = this.purchase.clone();
+      this.purchaseService.reset();
+      this.purchase = this.purchaseService.getPurchase();
+      console.log('We purchase', purchased);
+    });
   }
 
 
