@@ -3,7 +3,7 @@
   <div class="row" *ngIf="purchase.orders$ | async; let orders;">
     <!-- Aside-->
     <div class="col-sm-4">
-      <div class="card mb-4" *ngIf="((user$ | async)?.hasOrdered || orders.length) &amp;&amp; (user$ | async)?.name">
+      <div class="card mb-4" *ngIf="(((user$ | async)?.hasPurchased || (user$ | async)?.loggedIn) || orders.length)">
         <div class="card-header">Hello {{ (user$ | async)?.name }}!</div>
       </div>
       <div class="card" *ngIf="orders.length">
@@ -22,7 +22,7 @@
       <h3>Angular Checkout</h3>
       <hr>
       <form [formGroup]="checkoutForm" (ngSubmit)="submitCheckout()">
-        <app-user-details *ngIf="!orders.length &amp;&amp; !(user$ | async)?.hasOrdered" (whenValidSubmit)="whenUserDetailsValidSubmit($event)" [checkoutForm]="checkoutForm"></app-user-details>
+        <app-user-details *ngIf="!orders.length &amp;&amp; !(user$ | async)?.hasPurchased" (whenValidSubmit)="whenUserDetailsValidSubmit($event)" [checkoutForm]="checkoutForm"></app-user-details>
         <div class="row">
           <div class="col-sm-8 offset-sm-2 pt-4">
             <input class="btn btn-primary btn-block" type="submit" value="Add to Basket">

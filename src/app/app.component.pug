@@ -4,7 +4,7 @@
     // Aside
     .col-sm-4
 
-      .card.mb-4(*ngIf="((user$ | async)?.hasOrdered || orders.length) && (user$ | async)?.name")
+      .card.mb-4(*ngIf="(((user$ | async)?.hasPurchased || (user$ | async)?.loggedIn) || orders.length)")
         .card-header Hello {{ (user$ | async)?.name }}!
 
       .card(*ngIf="orders.length")
@@ -35,7 +35,7 @@
 
         form([formGroup]="checkoutForm"   (ngSubmit)="submitCheckout()" )
           app-user-details(
-            *ngIf="!orders.length && !(user$ | async)?.hasOrdered"
+            *ngIf="!orders.length && !(user$ | async)?.hasPurchased"
             (whenValidSubmit) = "whenUserDetailsValidSubmit($event)"
             [checkoutForm]="checkoutForm"
             )

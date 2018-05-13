@@ -67,7 +67,7 @@ export class PurchaseService {
     return PurchaseModel.checkout(this.purchase)
       .then(() => {
         const user = this.userService.getUser();
-        user.setHasOrdered(true);
+        user.setHasPurchased(true);
         this.userService.setCurrentUser(user);
       });
   }

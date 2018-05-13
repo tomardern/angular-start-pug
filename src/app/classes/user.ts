@@ -3,13 +3,21 @@ export class User {
   private name: String;
   private email: String;
   private externalId: String;
-  private hasOrdered: boolean;
+  private hasPurchased: boolean;
+  private loggedIn: boolean;
+
+  constructor() {
+  }
 
   setName(name: String) {
     this.name = name;
   }
   getName() {
     return this.name;
+  }
+
+  isLoggedIn() {
+    return this.loggedIn;
   }
 
   setEmail(email: String) {
@@ -23,11 +31,8 @@ export class User {
     this.externalId = md5;
   }
 
-  setHasOrdered(bool: boolean) {
-    this.hasOrdered = bool;
-  }
-  getHasOrdered() {
-    return this.hasOrdered;
+  setHasPurchased(bool: boolean) {
+    this.hasPurchased = bool;
   }
 
 
