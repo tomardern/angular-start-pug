@@ -12,11 +12,13 @@ export default {
     openBrowser(id, pageUrl, browserName) {
         //runningBrowsers[id] = id;
 
+        const url = pageUrl.replace(':3011', '');
         // do a GET request to the server
         const server = process.env.TESTCAFE_LAMBDA_CHROME_URL;
-        rp(`${server}?url=${pageUrl}`);
+        rp(`${server}?url=${url}&exitOnSelector=.disconnected`)
+            .catch(() => ''); // Do nothing....
 
-        console.log('id is', id, pageUrl, browserName);
+        console.log('id is', id, url, browserName);
 
         return Promise.resolve();
     },

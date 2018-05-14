@@ -9,7 +9,7 @@ testcafe "chrome:emulation:device=iphone 6" tests/sample-fixture.js
 
 # Install a local package
 From root project, run the below to build the lambda-chrome testcafe extension, then build:
-npm run --prefix ./testcafe-lambda-chrome  build && npm install ./testcafe-lambda-chrome --save-dev
+npm run --prefix ./testcafe-lambda-chrome  build && npm install ./testcafe-lambda-chrome --save-dev && node scripts/server.js
 
 
 "ng": "ng",

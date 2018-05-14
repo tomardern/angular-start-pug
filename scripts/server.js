@@ -4,13 +4,14 @@ const createTestCafe = require('testcafe');
 const fs = require('fs');
 
 const lambdaChrome = require('testcafe-browser-provider-lambda-chrome');
-console.log(lambdaChrome);
 
 const app = express();
 var concat = require('concat-stream');
 app.use(bodyParser.text({ type: '*/*' }));
 
-process.env.TESTCAFE_LAMBDA_CHROME_URL = 'http://localhost:3009';
+//process.env.TESTCAFE_LAMBDA_CHROME_URL = 'http://localhost:3009';
+//process.env.TESTCAFE_LAMBDA_CHROME_URL = 'https://p12clx547d.execute-api.eu-west-1.amazonaws.com/prod/Frontend-Puppeteer';
+process.env.TESTCAFE_LAMBDA_CHROME_URL = 'https://lpgx91xpyb.execute-api.eu-west-1.amazonaws.com/dev/remote-puppeteer';
 
 console.log('LAMBDA URL', process.env.TESTCAFE_LAMBDA_CHROME_URL);
 
@@ -30,9 +31,13 @@ app.post('/', (req, res) => {
   let runner;
   let numberOfTests = 0;
 
-  createTestCafe('localhost', portToUse)
+  let host = '03a53a29.ngrok.io';
+  //host = 'localhost';
+
+  createTestCafe(host, 3011)
     .then(tc => {
       testcafe = tc;
+      console.log('woop');
 
       // Prepare the runner
       runner = testcafe.createRunner()
@@ -48,6 +53,7 @@ app.post('/', (req, res) => {
       console.log('[CONNECT URL]', testcafe.browserConnectionGateway.connectUrl);
 
       return runner.browsers('lambda-chrome')
+      //return runner.browsers('chrome')
         .concurrency(numberOfTests) // We want each browser to run just one test
         .run();
     })

@@ -29,11 +29,14 @@ exports.default = {
     openBrowser: function openBrowser(id, pageUrl, browserName) {
         //runningBrowsers[id] = id;
 
+        var url = pageUrl.replace(':3011', '');
         // do a GET request to the server
         var server = process.env.TESTCAFE_LAMBDA_CHROME_URL;
-        rp(server + '?url=' + pageUrl);
+        rp(server + '?url=' + url + '&exitOnSelector=.disconnected').catch(function () {
+            return '';
+        }); // Do nothing....
 
-        console.log('id is', id, pageUrl, browserName);
+        console.log('id is', id, url, browserName);
 
         return _promise2.default.resolve();
     },
