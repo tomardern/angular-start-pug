@@ -31,6 +31,8 @@ export class UserModel {
    * @param user
    */
   static updateEmailPreference(data: EmailPreference, user: User) {
+    const payload = Object.assign({}, data, { email: user.getEmail() });
+    console.log('payload', payload);
     return Promise.resolve();
   }
 

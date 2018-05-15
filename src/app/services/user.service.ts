@@ -26,9 +26,9 @@ export class UserService {
    * @param data
    * @param user
    */
-  updateUser(data, user?: User): Promise<void> {
-    const u = user || this.getUser();
-    return UserModel.update(data, user);
+  updateUser(data, user?: User) {
+    const u = user || this.getUser() || new User();
+    return UserModel.update(data, u);
   }
 
   /**
@@ -37,14 +37,8 @@ export class UserService {
    * @param user
    */
   updateEmailPreference(data, user?: User) {
-    const u = user || this.getUser();
-
-    UserModel.updateEmailPreference({
-      email_preference: 4,
-      consent_message: 'This is a message'
-    }, user);
-
-    return UserModel.updateEmailPreference(data, user);
+    const u = user || this.getUser() || new User();
+    return UserModel.updateEmailPreference(data, u);
   }
 
 
