@@ -100,18 +100,13 @@ export class PurchaseModel {
   }
 
 
+  /**
+   * Wait for success
+   * @param user
+   */
+  waitForSuccess(purchase: Purchase, user: User) {
 
-
-
-  waitForSuccess() {
-
-
-
-
-
-
-
-
+    const pusher = PusherModel.waitForPusher(user);
 
     return Promise.race([
       pusher.promise,

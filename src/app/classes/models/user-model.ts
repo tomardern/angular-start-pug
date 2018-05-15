@@ -1,12 +1,17 @@
 import { User } from 'classes/user';
 
+/**
+ * Email Preference
+ */
 interface EmailPreference {
   email_preference: number;
-  consent_message: string;
+  consent_message?: string; // Optional
 }
 
 
-
+/**
+ * User Model
+ */
 export class UserModel {
 
 

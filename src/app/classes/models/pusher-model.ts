@@ -1,7 +1,7 @@
 import { Purchase } from 'classes/purchase';
 import { User } from 'classes/user';
 
-class Channel {
+class Listener {
   subscribe() { }
   bind(string, callback) { }
   unbind() { }
@@ -13,7 +13,7 @@ class Pusher {
     return this;
   }
   subscribe(string) {
-    return new Channel();
+    return new Listener();
   }
 }
 
