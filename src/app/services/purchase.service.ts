@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Purchase } from 'classes/purchase';
-import { PurchaseModel } from 'classes/purchase-model';
+import { PurchaseModel } from 'classes/models/purchase-model';
 import { UserService } from 'services/user.service';
 import { Order } from 'classes/order';
 import { User } from 'classes/user';
@@ -64,7 +64,7 @@ export class PurchaseService {
    * Checout the purchase
    */
   checkout() {
-    return PurchaseModel.checkout(this.purchase)
+    return PurchaseModel.finalise(this.purchase)
       .then(() => {
         const user = this.userService.getUser();
         user.setHasPurchased(true);

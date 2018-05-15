@@ -66,6 +66,19 @@ export class AppComponent {
   }
 
   checkout() {
+    const user = new User();
+    user.setEmail('hello@email.com');
+
+    // To update a non logged in user
+    this.userService.updateEmailPreference({
+      emailPreference: 1
+    }, user);
+
+    // - or - update the current user
+    this.userService.updateEmailPreference({
+      emailPreference: 1
+    });
+
     return this.purchaseService.checkout().then(() => {
       const purchased = this.purchase.clone();
       this.purchaseService.reset();

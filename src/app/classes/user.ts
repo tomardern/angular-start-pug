@@ -31,6 +31,10 @@ export class User {
     this.externalId = md5;
   }
 
+  getId() {
+    return 'hello-world'
+  }
+
   setHasPurchased(bool: boolean) {
     this.hasPurchased = bool;
   }
